@@ -4,12 +4,10 @@
 #include "mlvalues.h"
 #include "domain_state.h"
 
-static void displayStack();
 
 /* ================================================== */
 
 mlvalue* caml_alloc(size_t size) {
-//  displayStack();
   return aligned_alloc(8,size);
 }
 

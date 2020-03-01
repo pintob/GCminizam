@@ -33,7 +33,6 @@ mlvalue caml_interprete(code_t* prog) {
   unsigned int trap_sp = 0;
 
   while(1) {
-
 #ifdef DEBUG
       printf("pc=%d  accu=%s  sp=%d extra_args=%d trap_sp=%d stack=[",
              pc, val_to_str(accu), sp, extra_args, trap_sp);
@@ -46,6 +45,8 @@ mlvalue caml_interprete(code_t* prog) {
       printf("]  env=%s\n", val_to_str(env));
       print_instr(prog, pc);
 #endif
+
+    displayStack();
 
     switch (prog[pc++]) {
     case CONST:
@@ -101,8 +102,8 @@ mlvalue caml_interprete(code_t* prog) {
 
     case APPLY: {
         uint64_t n = prog[pc++];
-      for (uint64_t i = 0; i < n; i++) {
-          stack[sp-i+3] = stack[sp-i];
+      for (uint64_t i = n-1; i != -1; i--) {
+          stack[sp-i+3-1] = stack[sp-i-1];
       }
       stack[sp-n] = env;
       stack[sp-n+1] = Val_long(pc);
@@ -114,6 +115,27 @@ mlvalue caml_interprete(code_t* prog) {
       extra_args = n-1;
       break;
     }
+
+
+//        case APPLY: {
+//            uint64_t n = prog[pc++];
+//            mlvalue* tmp = malloc(n * sizeof(mlvalue)); // TODO: remove malloc
+//            for (uint64_t i = 0; i < n; i++) {
+//                tmp[i] = POP_STACK();
+//            }
+//            PUSH_STACK(env);
+//            PUSH_STACK(Val_long(pc));
+//            PUSH_STACK(Val_long(extra_args));
+//            /* push in reverse order to keep the initial order */
+//            for (int i = n-1; i >= 0; i--) {
+//                PUSH_STACK(tmp[i]);
+//            }
+//            free(tmp);
+//            pc = Addr_closure(accu);
+//            env = Env_closure(accu);
+//            extra_args = n-1;
+//            break;
+//        }
 
     case APPTERM: {
       uint64_t n = prog[pc++];

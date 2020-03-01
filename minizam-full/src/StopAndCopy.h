@@ -2,7 +2,7 @@
 // Created by bruno on 28/02/2020.
 //
 
-#define __USE_STOP_AND_STOP__ // <- set with -D compilation option
+//#define __USE_STOP_AND_STOP__ // <- set with -D compilation option
 #ifdef __USE_STOP_AND_STOP__
 
 #ifndef MINIZAM_ETU_STOPANDCOPY_H
