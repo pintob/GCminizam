@@ -19,14 +19,11 @@
 #include <stdlib.h>
 #include "mlvalues.h"
 #include "config.h"
-
-typedef struct _ml_list{
-    struct _big_list* next;
-    mlvalue elem;
-}Mlvalue_list;
+#define VERBOSE
 
 typedef struct{
-    Mlvalue_list *big_obj_list;
+    mlvalue *big_obj_list;
+    mlvalue *free_list;
     unsigned int current_memory_size;
     unsigned int last_gc_size;
 }GC_global_data;
@@ -35,6 +32,8 @@ typedef mlvalue Page[KB * 64 / sizeof(mlvalue)];
 
 void init_gc_data(GC_global_data* data);
 
-void bootstrap(GC_global_data* data);
+mlvalue* new(size_t size, GC_global_data* data);
+void trigger_gc();
+
 #endif //MINIZAM_ETU_MARKANDSWEEP_H
 #endif //__USE_MARK_AND_SWEEP

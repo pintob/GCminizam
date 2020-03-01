@@ -34,4 +34,10 @@ int main(int argc, char** argv) {
     printf("%s\n", res_str);
     free(res_str);
   }
+  exit(EXIT_SUCCESS);
+  /* todo | set callback function to
+   * todo | purge surviving memory
+   * todo | using atexit or on_exit (use man)
+   */
+
 }
