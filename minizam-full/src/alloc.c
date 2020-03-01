@@ -30,8 +30,7 @@ void displayStack(){
             switch (Tag(temp)){
                 case ENV_T: printf("ENV_T %s\n", val_to_str(temp)); break;
                 case CLOSURE_T: printf("CLOSURE_T\n");  break;
-                case BLOCK_T: printf("BLOCK_T: size: %ld at %p\n", Size(temp), (mlvalue *)temp-1); break;
-                                                                                      // temp -1 to access the header
+                case BLOCK_T: printf("BLOCK_T: size: %ld at %p\n", Size(temp), (mlvalue *)temp); break;
                 default:
                     fprintf(stderr, "FATAL ERROR ON SWITCH %s line %d\n", __FILE__, __LINE__);
                     exit(1);

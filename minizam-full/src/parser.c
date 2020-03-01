@@ -226,6 +226,6 @@ code_t* parse(char* filename) {
                                        .arg2 = arg2 };
     code_size++;
   }
-
+  fclose(f);
   return assemble(code, labels, instr_count, code_size);
 }

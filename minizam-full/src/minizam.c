@@ -16,6 +16,7 @@ mlvalue eval_file(char* filename) {
   caml_init_domain();
   mlvalue ret = caml_interprete(code);
   free(code);
+
   return ret;
 }
 

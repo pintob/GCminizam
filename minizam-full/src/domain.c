@@ -13,7 +13,6 @@ void caml_init_domain() {
   Caml_state->sp = 0;
 
   Caml_state->stack = malloc(Stack_size);
-
   init_gc_data(&(Caml_state->gc_data));
 
 }

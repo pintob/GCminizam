@@ -3,6 +3,7 @@
 //
 
 #include "MarkAndSweep.h"
+#include "domain_state.h"
 #include <assert.h>
 #include <stdio.h>
 
@@ -14,7 +15,7 @@
 
 static mlvalue* big_elem_new(size_t size, GC_global_data* data);
 static void display_big_elem(GC_global_data* data);
-
+static void purge_mem(int nothing, void* _data);
 /*STATIC FUNCTION DECLARATION @*/
 
 #define ISCONSISTENTSTATE \
@@ -30,12 +31,13 @@ void init_gc_data(GC_global_data* data){
     data->big_obj_list = NULL;
     data->free_list = NULL;
 
+    on_exit(purge_mem, data);
     // todo set the callback function with on_exit to pg the memory
 
 }
 
 mlvalue* new(size_t size, GC_global_data* data){
-    ISCONSISTENTSTATE
+//    ISCONSISTENTSTATE
 
     size = AJUST(size);
 
@@ -70,8 +72,24 @@ void display_big_elem(GC_global_data* data){
     }
 }
 
+
 void trigger_gc() {
     // todo
+}
+
+void purge_mem(int nothing, void* _data){
+    GC_global_data* data = (GC_global_data*)_data;
+    mlvalue* tmp;
+    for(mlvalue* e = data->big_obj_list; e != NULL; e = tmp){
+        tmp = e[0];
+        free((void*)e);
+#ifdef VERBOSE
+        printf("\033[1;31mFinal purge of %p\033[0m\n", e);
+#endif // VERBOSE
+    }
+    free(Caml_state->stack);
+    free(Caml_state);
+
 }
 
 #undef ISCONSISTENTSTATE
