@@ -37,9 +37,9 @@ bits  63    10 9     8 7   0
 #define Color(v) Color_hd(Hd_val(v))
 #define Tag(v)  Tag_hd(Hd_val(v))
 
-#define WHITE 0
-#define GRAY 1
-#define BLACK 2
+//#define WHITE 0
+//#define GRAY 1
+//#define BLACK 2
 #define Make_header(size,color,tag)                                     \
   ((header_t)(((size) << 10) | (((color) & 3) << 8) | ((tag) & 0xFF)))
 

@@ -16,7 +16,7 @@
 
 #ifdef __USE_MARK_AND_SWEEP
 #define FIRSTGCAT (1 * KB)
-#define AJUST(size) ((size & ~0x7) + 8)
+#define AJUST(size) ((size & ~0x7) + 8) // maybe change to ~0xf + 16
 #endif // __USE_MARK_AND_SWEEP
 
 #endif

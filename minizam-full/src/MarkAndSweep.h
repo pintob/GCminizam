@@ -33,7 +33,8 @@ typedef mlvalue Page[KB * 64 / sizeof(mlvalue)];
 void init_gc_data(GC_global_data* data);
 
 mlvalue* new(size_t size, GC_global_data* data);
-void trigger_gc();
+void gc_if_necessary(GC_global_data* data);
+void gc(GC_global_data* data);
 
 #endif //MINIZAM_ETU_MARKANDSWEEP_H
 #endif //__USE_MARK_AND_SWEEP

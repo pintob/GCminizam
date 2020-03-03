@@ -28,9 +28,12 @@ void displayStack(){
         }
         else{
             switch (Tag(temp)){
-                case ENV_T: printf("ENV_T %s\n", val_to_str(temp)); break;
-                case CLOSURE_T: printf("CLOSURE_T\n");  break;
-                case BLOCK_T: printf("BLOCK_T: size: %ld at %p\n", Size(temp), (mlvalue *)temp); break;
+                case ENV_T: printf("ENV_T: size: %ld at %p | color:%d\n",
+                        Size(temp), (mlvalue *)temp, Color(temp)); break;
+                case CLOSURE_T: printf("CLOSURE_T: size: %ld at %p | color:%d\n",
+                        Size(temp), (mlvalue *)temp, Color(temp)); break;
+                case BLOCK_T: printf("BLOCK_T: size: %ld at %p | color:%d\n",
+                        Size(temp), (mlvalue *)temp, Color(temp)); break;
                 default:
                     fprintf(stderr, "FATAL ERROR ON SWITCH %s line %d\n", __FILE__, __LINE__);
                     exit(1);
