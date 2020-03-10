@@ -18,19 +18,22 @@
 #define PUSH_STACK(x) stack[sp++] = x
 
 #define sp (Caml_state->sp)
+#define env (Caml_state->env)
+#define accu (Caml_state->accu)
 
 
 mlvalue caml_interprete(code_t* prog) {
 
   mlvalue* stack = Caml_state->stack;
-  mlvalue accu = Val_long(0);
-  mlvalue env = Make_empty_env();
+  accu = Val_long(0);
+  env = Make_empty_env();
 
 //  register unsigned int sp = 0;
   sp = 0;
   register unsigned int pc = 0;
   unsigned int extra_args = 0;
   unsigned int trap_sp = 0;
+
 
   while(1) {
 #ifdef DEBUG
@@ -46,9 +49,15 @@ mlvalue caml_interprete(code_t* prog) {
       print_instr(prog, pc);
 #endif
 
-    displayStack();
-
-    switch (prog[pc++]) {
+#ifndef NDEBUG // same macro as assert
+      printf("\033[1;33m");
+      displayStack();
+      printf("accu: %p\n", (void*)accu);
+      printf("size of env: %ld\n", Size(env));
+      printf("\033[0m");
+#endif
+     gc(&Caml_state->gc_data);
+     switch (prog[pc++]) {
     case CONST:
       accu = Val_long(prog[pc++]);
       break;
@@ -177,6 +186,9 @@ mlvalue caml_interprete(code_t* prog) {
     }
 
     case CLOSURE: {
+#ifndef NDEBUG
+    printf("CLOSURE!\n");
+#endif // NDEBUG
       uint64_t addr = prog[pc++];
       uint64_t n = prog[pc++];
       if (n > 0) {
@@ -213,6 +225,9 @@ mlvalue caml_interprete(code_t* prog) {
     }
 
     case MAKEBLOCK: {
+    #ifndef NDEBUG
+        printf("block!\n");
+    #endif // NDEBUG
       uint64_t n = prog[pc++];
       mlvalue blk = make_block(n,BLOCK_T);
       if (n > 0) {

@@ -21,14 +21,17 @@
 #include "config.h"
 #define VERBOSE
 
+typedef struct _f{
+    struct _f *next;
+    mlvalue body[];
+}Cell_list, *Elem_list;
+
 typedef struct{
-    mlvalue *big_obj_list;
-    mlvalue *free_list;
+    Elem_list big_obj_list;
+    Elem_list free_list;
     unsigned int current_memory_size;
     unsigned int last_gc_size;
 }GC_global_data;
-
-typedef mlvalue Page[KB * 64 / sizeof(mlvalue)];
 
 void init_gc_data(GC_global_data* data);
 

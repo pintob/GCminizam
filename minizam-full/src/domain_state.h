@@ -7,10 +7,13 @@
 typedef struct _caml_domain_state {
   /* Stack */
   mlvalue* stack;
+  mlvalue accu;
+  mlvalue env;
+
+    //not the most effective option but the simplest
   unsigned int sp;
 
   GC_global_data gc_data;
-  // TODO add globale variable for the gc
 } caml_domain_state;
 
 /* The global state */

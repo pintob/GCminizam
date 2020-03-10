@@ -8,11 +8,13 @@
 /* ================================================== */
 
 mlvalue* caml_alloc(size_t size) {
+#ifdef VERBOSE
+    printf("\033[1;31mRequest of %ld octets\n", size);
+#endif // VERBOSE
 #ifndef __GC_SET__
   return aligned_alloc(8,size);
 #endif // __GC_SET__
 #ifdef __USE_MARK_AND_SWEEP
-    // todo triggerGC ???
     return new(size, &Caml_state->gc_data);
 #endif
 
@@ -28,14 +30,14 @@ void displayStack(){
         }
         else{
             switch (Tag(temp)){
-                case ENV_T: printf("ENV_T: size: %ld at %p | color:%d\n",
+                case ENV_T: printf("ENV_T: size: %ld at %p | color:%ld\n",
                         Size(temp), (mlvalue *)temp, Color(temp)); break;
-                case CLOSURE_T: printf("CLOSURE_T: size: %ld at %p | color:%d\n",
+                case CLOSURE_T: printf("CLOSURE_T: size: %ld at %p | color:%ld\n",
                         Size(temp), (mlvalue *)temp, Color(temp)); break;
-                case BLOCK_T: printf("BLOCK_T: size: %ld at %p | color:%d\n",
+                case BLOCK_T: printf("BLOCK_T: size: %ld at %p | color:%ld\n",
                         Size(temp), (mlvalue *)temp, Color(temp)); break;
                 default:
-                    fprintf(stderr, "FATAL ERROR ON SWITCH %s line %d\n", __FILE__, __LINE__);
+                    fprintf(stderr, "FATAL ERROR ON SWITCH %s line %d with %p\n", __FILE__, __LINE__, (mlvalue *)temp-2);
                     exit(1);
             }
         }
