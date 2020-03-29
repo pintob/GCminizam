@@ -1,7 +1,7 @@
 //
 // Created by bruno on 28/02/2020.
 //
-
+#ifdef MINIZAM_ETU_MARKANDSWEEP_H
 #include "MarkAndSweep.h"
 #include "domain_state.h"
 #include <assert.h>
@@ -310,3 +310,4 @@ void purge_mem(int nothing, void* _data){
 }
 
 #undef ISCONSISTENTSTATE
+#endif //MINIZAM_ETU_MARKANDSWEEP_H
