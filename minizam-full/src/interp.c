@@ -20,12 +20,14 @@
 #define sp (Caml_state->sp)
 #define env (Caml_state->env)
 #define accu (Caml_state->accu)
+#define accu2 (Caml_state->accu2)
 
 
 mlvalue caml_interprete(code_t* prog) {
 
   mlvalue* stack = Caml_state->stack;
   accu = Val_long(0);
+  accu2 = Val_long(0);
   env = Make_empty_env();
 
 //  register unsigned int sp = 0;
@@ -186,20 +188,18 @@ mlvalue caml_interprete(code_t* prog) {
     }
 
     case CLOSURE: {
-#ifndef NDEBUG
-    printf("CLOSURE!\n");
-#endif // NDEBUG
       uint64_t addr = prog[pc++];
       uint64_t n = prog[pc++];
       if (n > 0) {
         PUSH_STACK(accu);
       }
-      mlvalue closure_env = Make_env(n+1);
-      Field(closure_env,0) = Val_long(addr);
+      accu2 = Make_env(n+1);
+      Field(accu2,0) = Val_long(addr);
       for (uint64_t i = 0; i < n; i++) {
-        Field(closure_env,i+1) = POP_STACK();
+        Field(accu2,i+1) = POP_STACK();
       }
-      accu = make_closure(addr,closure_env);
+      accu = make_closure(addr,accu2);
+      accu2 = Val_long(0);
       break;
     }
 
@@ -209,12 +209,12 @@ mlvalue caml_interprete(code_t* prog) {
       if (n > 0) {
         PUSH_STACK(accu);
       }
-      mlvalue closure_env = Make_env(n+1);
-      Field(closure_env,0) = Val_long(addr);
+      accu2= Make_env(n+1);
+      Field(accu2,0) = Val_long(addr);
       for (uint64_t i = 0; i < n; i++) {
-        Field(closure_env,i+1) = POP_STACK();
+        Field(accu2,i+1) = POP_STACK();
       }
-      accu = make_closure(addr,closure_env);
+      accu = make_closure(addr,accu2);
       PUSH_STACK(accu);
       break;
     }
@@ -225,9 +225,7 @@ mlvalue caml_interprete(code_t* prog) {
     }
 
     case MAKEBLOCK: {
-    #ifndef NDEBUG
-        printf("block!\n");
-    #endif // NDEBUG
+
       uint64_t n = prog[pc++];
       mlvalue blk = make_block(n,BLOCK_T);
       if (n > 0) {

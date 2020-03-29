@@ -15,6 +15,7 @@ mlvalue* caml_alloc(size_t size) {
   return aligned_alloc(8,size);
 #endif // __GC_SET__
 #ifdef __USE_MARK_AND_SWEEP
+    gc_if_necessary(&Caml_state->gc_data);
     return new(size, &Caml_state->gc_data);
 #endif
 

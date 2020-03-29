@@ -8,6 +8,7 @@ typedef struct _caml_domain_state {
   /* Stack */
   mlvalue* stack;
   mlvalue accu;
+  mlvalue accu2;
   mlvalue env;
 
     //not the most effective option but the simplest

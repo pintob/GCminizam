@@ -6,6 +6,7 @@
 #include "alloc.h"
 #include "instruct.h"
 #include "primitives.h"
+#include "domain_state.h"
 
 mlvalue make_empty_block(tag_t tag) {
   mlvalue* block = caml_alloc(sizeof(mlvalue));
@@ -14,8 +15,10 @@ mlvalue make_empty_block(tag_t tag) {
 }
 
 mlvalue make_block(size_t size, tag_t tag) {
+
   mlvalue* block = caml_alloc((size+1) * sizeof(mlvalue));
   block[0] = Make_header(size, WHITE, tag);
+
   return Val_ptr(block+1);
 }
 

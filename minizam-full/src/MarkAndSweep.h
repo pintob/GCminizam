@@ -19,16 +19,23 @@
 #include <stdlib.h>
 #include "mlvalues.h"
 #include "config.h"
-#define VERBOSE
-
+//#define VERBOSE
+#define NDEBUG
 typedef struct _f{
     struct _f *next;
+    mlvalue header;
     mlvalue body[];
 }Cell_list, *Elem_list;
+
+typedef struct _g{
+    struct _g *next;
+    Cell_list cell;
+}*Page;
 
 typedef struct{
     Elem_list big_obj_list;
     Elem_list free_list;
+    Page page;
     unsigned int current_memory_size;
     unsigned int last_gc_size;
 }GC_global_data;
