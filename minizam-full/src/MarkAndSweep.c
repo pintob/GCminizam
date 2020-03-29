@@ -1,8 +1,9 @@
 //
 // Created by bruno on 28/02/2020.
 //
-#ifdef MINIZAM_ETU_MARKANDSWEEP_H
 #include "MarkAndSweep.h"
+#ifdef __USE_MARK_AND_SWEEP
+
 #include "domain_state.h"
 #include <assert.h>
 #include <stdio.h>
