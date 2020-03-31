@@ -22,16 +22,17 @@ void init_gc_data(GC_global_data* data){
 mlvalue* new(size_t size, GC_global_data* data){
     /*commence par verifier s'il y a besoin de faire un gc
      * puis allou la variable a partir du pointeur de tat*/
-    gc_if_necessary(data);
+    gc_if_necessary(data,size);
+
     int temp =data->alloc_pointer;
     /*allou dans le tableau un objet */
-    data->alloc_pointer +=(size) ;
-    return (data->tospace+temp);
+    data->alloc_pointer +=(size+1);
+    return data->tospace+temp;
 }
-void gc_if_necessary(GC_global_data* data){
+void gc_if_necessary(GC_global_data* data,size_t size){
     /*verifie s'il reste de la place dans le tat courent si oui la fonction ternmine.
      * sinon on fait un appel au GC*/
-    if(data->alloc_pointer == data->alloc_taille) {
+    if((data->alloc_pointer+size) > data->alloc_taille) {
         gc(data);
     }
 }
@@ -102,6 +103,15 @@ void gc(GC_global_data* data) {
 
         } else {
             n2 = *Ptr_val(n2);
+        }
+    }
+    for(mlvalue i = 0; i < data->alloc_taille; i++){
+        if(Is_block(data->fromspace[i])) {
+            if (need_copy(data->fromspace[i])) {
+                copy(data->fromspace[i], data, apf);
+            } else {
+                data->fromspace[i] = *(Ptr_val(data->fromspace[i]));
+            }
         }
     }
     mlvalue* temp =data->fromspace;

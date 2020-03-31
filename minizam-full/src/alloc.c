@@ -18,7 +18,10 @@ mlvalue* caml_alloc(size_t size) {
     gc_if_necessary(&Caml_state->gc_data);
     return new(size, &Caml_state->gc_data);
 #endif
+#ifdef __USE_STOP_AND_COPY__
 
+    return new(size, &Caml_state->gc_data);
+#endif
 }
 
 void displayStack(){

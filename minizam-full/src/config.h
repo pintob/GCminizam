@@ -18,5 +18,8 @@
 #define FIRSTGCAT (1 * KB)
 #define AJUST(size) ((size & ~0x7) + 8) // maybe change to ~0xf + 16
 #endif // __USE_MARK_AND_SWEEP
+#ifdef __USE_STOP_AND_COPY__
+#define FIRSTGCAT (1 * KB)
 
+#endif //__USE_STOP_AND_COPY__
 #endif

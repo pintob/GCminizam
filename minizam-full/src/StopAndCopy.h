@@ -35,7 +35,7 @@ void init_gc_data(GC_global_data* data);
 mlvalue* new(size_t size, GC_global_data* data);
 
 /*test si il faut declancher le GC*/
-void gc_if_necessary(GC_global_data* data);
+void gc_if_necessary(GC_global_data* data,size_t size);
 
 /*code du GC appel par gc_if_nes*/
 void gc(GC_global_data* data);
