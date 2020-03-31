@@ -4,6 +4,6 @@
 #include "mlvalues.h"
 
 mlvalue* caml_alloc(size_t size);
-void displayStack();
+void displayStack(); // <- just for debugging
 
 #endif

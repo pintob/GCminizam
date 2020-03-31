@@ -23,7 +23,7 @@ mlvalue* caml_alloc(size_t size) {
 
 void displayStack(){
     mlvalue temp;
-    for(int i = 0; i < Caml_state->sp; i++){
+    for(mlvalue i = 0; i < Caml_state->sp; i++){
         temp = Caml_state->stack[i];
         printf("%d: ", i);
         if(Is_long(temp)){

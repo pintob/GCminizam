@@ -5,7 +5,6 @@
 #ifndef MINIZAM_ETU_GC_H
 #define MINIZAM_ETU_GC_H
 
-/* around allocation to the 8 bytes higher */
 
 
 #include "StopAndCopy.h"

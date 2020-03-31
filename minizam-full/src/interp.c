@@ -57,8 +57,9 @@ mlvalue caml_interprete(code_t* prog) {
       printf("accu: %p\n", (void*)accu);
       printf("size of env: %ld\n", Size(env));
       printf("\033[0m");
+            gc(&Caml_state->gc_data);
+
 #endif
-     gc(&Caml_state->gc_data);
      switch (prog[pc++]) {
     case CONST:
       accu = Val_long(prog[pc++]);
@@ -113,7 +114,7 @@ mlvalue caml_interprete(code_t* prog) {
 
     case APPLY: {
         uint64_t n = prog[pc++];
-      for (uint64_t i = n-1; i != -1; i--) {
+      for (int i = n-1; i != -1; i--) {
           stack[sp-i+3-1] = stack[sp-i-1];
       }
       stack[sp-n] = env;
@@ -131,7 +132,7 @@ mlvalue caml_interprete(code_t* prog) {
       uint64_t n = prog[pc++];
       uint64_t m = prog[pc++];
 
-      for (uint64_t i = n-1; i != -1; i--) {
+      for (int i = n-1; i != -1; i--) {
         stack[sp-i+n-m-1] = stack[sp-i-1]; // await better
       }
       sp -= m - n;
