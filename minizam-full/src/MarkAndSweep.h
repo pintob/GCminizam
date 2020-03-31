@@ -4,8 +4,8 @@
 
 
 
+//#define __USE_MARK_AND_SWEEP
 
-#define __USE_MARK_AND_SWEEP
 #ifdef __USE_MARK_AND_SWEEP
 
 #ifndef MINIZAM_ETU_MARKANDSWEEP_H

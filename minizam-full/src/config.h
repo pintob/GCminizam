@@ -10,7 +10,7 @@
 /* No boundary-checks are done: stack overflow will silently corrupt
    the heap; probably causing something to go wrong somewhere. */
 /* TODO: auto-growing stack, or throw stack overflow when needed. */
-/* Gaël fprintf(stderr ...) et exit(1) sont assez partique au pire */
+/* Gaël fprintf(stderr ...) et exit(1) sont assez pratique au pire */
 
 #define Stack_size (8 * MB)
 

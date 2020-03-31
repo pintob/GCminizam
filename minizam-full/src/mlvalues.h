@@ -6,7 +6,7 @@
 typedef int64_t mlvalue;
 typedef uint64_t header_t;
 typedef enum {WHITE , BLACK } color_t;
-typedef enum { ENV_T, CLOSURE_T, BLOCK_T } tag_t;
+typedef enum { ENV_T, CLOSURE_T, BLOCK_T,FWD_PTR_T } tag_t;
 
 /* If a mlvalue ends with 1, it's an integer, otherwise it's a pointer. */
 // cast for negate a warning (bitwise operator on signed integer)
